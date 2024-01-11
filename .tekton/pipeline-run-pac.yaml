@@ -4,13 +4,14 @@ kind: PipelineRun
 metadata:
   labels:
     "app.kubernetes.io/instance": "func-pac"
+    "app.openshift.io/runtime": "golang"
     "boson.dev/function": "true"
-    "boson.dev/runtime": "typescript"
+    "boson.dev/runtime": "go"
     "function.knative.dev": "true"
     "function.knative.dev/name": "func-pac"
-    "function.knative.dev/runtime": "typescript"
+    "function.knative.dev/runtime": "go"
     
-    tekton.dev/pipeline: func-pac-s2i-git-pipeline
+    tekton.dev/pipeline: func-pac-pack-git-pipeline
   annotations:
     # The event we are targeting as seen from the webhook payload
     # this can be an array too, i.e: [pull_request, push]
@@ -22,8 +23,8 @@ metadata:
     # Fetch the git-clone task from hub
     pipelinesascode.tekton.dev/task: git-clone
 
-    # Fetch the func-s2i task
-    pipelinesascode.tekton.dev/task-1: https://raw.githubusercontent.com/openshift-knative/kn-plugin-func/serverless-1.31/pkg/pipelines/resources/tekton/task/func-s2i/0.1/func-s2i-pac.yaml
+    # Fetch the func-buildpacks task
+    pipelinesascode.tekton.dev/task-1: https://raw.githubusercontent.com/openshift-knative/kn-plugin-func/serverless-1.31/pkg/pipelines/resources/tekton/task/func-buildpacks/0.2/func-buildpacks-pac.yaml
 
     # Fetch the func-deploy task
     pipelinesascode.tekton.dev/task-2: https://raw.githubusercontent.com/openshift-knative/kn-plugin-func/serverless-1.31/pkg/pipelines/resources/tekton/task/func-deploy/0.1/func-deploy-pac.yaml
@@ -36,7 +37,7 @@ metadata:
 
     # User defined Annotations
     
-  generateName: func-pac-s2i-git-pipeline-run
+  generateName: func-pac-pack-git-pipeline-run
 spec:
   params:
     - name: gitRepository
@@ -44,30 +45,28 @@ spec:
     - name: gitRevision
       value: {{ revision }}
     - name: contextDir
-      value: .
+      value: 
     - name: imageName
       value: image-registry.openshift-image-registry.svc:5000/demo/func-pac:latest
     - name: registry
       value: image-registry.openshift-image-registry.svc:5000/demo
     - name: builderImage
-      value: registry.access.redhat.com/ubi8/nodejs-16
+      value: ghcr.io/knative/builder-jammy-tiny:latest
     - name: buildEnvs
       value:
-        - BP_NODE_RUN_SCRIPTS=build
+        - =
         
-    - name: s2iImageScriptsUrl
-      value: image:///usr/libexec/s2i
   pipelineRef:
-   name: func-pac-s2i-git-pipeline
+   name: func-pac-pack-git-pipeline
   workspaces:
     - name: source-workspace
       persistentVolumeClaim:
-        claimName: func-pac-s2i-git-pipeline-pvc
+        claimName: func-pac-pack-git-pipeline-pvc
       subPath: source
     - name: cache-workspace
       persistentVolumeClaim:
-        claimName: func-pac-s2i-git-pipeline-pvc
+        claimName: func-pac-pack-git-pipeline-pvc
       subPath: cache
     - name: dockerconfig-workspace
       secret:
-        secretName: func-pac-s2i-git-pipeline-secret
+        secretName: func-pac-pack-git-pipeline-secret

@@ -1,14 +1,11 @@
 specVersion: 0.35.0
 name: func-pac
-runtime: typescript
+runtime: go
 registry: image-registry.openshift-image-registry.svc:5000/demo
 image: image-registry.openshift-image-registry.svc:5000/demo/func-pac:latest
-created: 2024-01-11T12:59:11.858045427+01:00
+created: 2024-01-11T13:07:48.76265683+01:00
 build:
   git:
     url: https://github.com/mvinkler/func-pac
     revision: main
-  builder: s2i
-  buildEnvs:
-  - name: BP_NODE_RUN_SCRIPTS
-    value: build
+  builder: pack
