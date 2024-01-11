@@ -3,15 +3,15 @@ apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   labels:
-    "app.kubernetes.io/instance": "func-pac"
+    "app.kubernetes.io/instance": "func-pac-two"
     "app.openshift.io/runtime": "spring-boot"
     "boson.dev/function": "true"
     "boson.dev/runtime": "springboot"
     "function.knative.dev": "true"
-    "function.knative.dev/name": "func-pac"
+    "function.knative.dev/name": "func-pac-two"
     "function.knative.dev/runtime": "springboot"
     
-    tekton.dev/pipeline: func-pac-pack-git-pipeline
+    tekton.dev/pipeline: func-pac-two-pack-git-pipeline
   annotations:
     # The event we are targeting as seen from the webhook payload
     # this can be an array too, i.e: [pull_request, push]
@@ -37,7 +37,7 @@ metadata:
 
     # User defined Annotations
     
-  generateName: func-pac-pack-git-pipeline-run
+  generateName: func-pac-two-pack-git-pipeline-run
 spec:
   params:
     - name: gitRepository
@@ -47,7 +47,7 @@ spec:
     - name: contextDir
       value: 
     - name: imageName
-      value: image-registry.openshift-image-registry.svc:5000/demo/func-pac:latest
+      value: image-registry.openshift-image-registry.svc:5000/demo/func-pac-two:latest
     - name: registry
       value: image-registry.openshift-image-registry.svc:5000/demo
     - name: builderImage
@@ -59,16 +59,16 @@ spec:
         - BP_MAVEN_BUILD_ARGUMENTS=-Pnative -Dmaven.test.skip=true --no-transfer-progress package
         
   pipelineRef:
-   name: func-pac-pack-git-pipeline
+   name: func-pac-two-pack-git-pipeline
   workspaces:
     - name: source-workspace
       persistentVolumeClaim:
-        claimName: func-pac-pack-git-pipeline-pvc
+        claimName: func-pac-two-pack-git-pipeline-pvc
       subPath: source
     - name: cache-workspace
       persistentVolumeClaim:
-        claimName: func-pac-pack-git-pipeline-pvc
+        claimName: func-pac-two-pack-git-pipeline-pvc
       subPath: cache
     - name: dockerconfig-workspace
       secret:
-        secretName: func-pac-pack-git-pipeline-secret
+        secretName: func-pac-two-pack-git-pipeline-secret
