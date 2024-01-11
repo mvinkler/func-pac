@@ -1,11 +1,22 @@
 specVersion: 0.35.0
 name: func-pac
-runtime: rust
+runtime: springboot
 registry: image-registry.openshift-image-registry.svc:5000/demo
 image: image-registry.openshift-image-registry.svc:5000/demo/func-pac:latest
-created: 2024-01-11T13:38:09.101165957+01:00
+created: 2024-01-11T14:30:13.178541007+01:00
 build:
-  builder: pack
   git:
     url: https://github.com/mvinkler/func-pac
     revision: main
+  builder: pack
+  buildEnvs:
+  - name: BP_NATIVE_IMAGE
+    value: "false"
+  - name: BP_JVM_VERSION
+    value: "17"
+  - name: BP_MAVEN_BUILD_ARGUMENTS
+    value: -Pnative -Dmaven.test.skip=true --no-transfer-progress package
+deploy:
+  healthEndpoints:
+    liveness: /actuator/health
+    readiness: /actuator/health

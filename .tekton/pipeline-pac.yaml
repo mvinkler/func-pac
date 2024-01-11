@@ -4,11 +4,12 @@ kind: Pipeline
 metadata:
   labels:
     "app.kubernetes.io/instance": "func-pac"
+    "app.openshift.io/runtime": "spring-boot"
     "boson.dev/function": "true"
-    "boson.dev/runtime": "rust"
+    "boson.dev/runtime": "springboot"
     "function.knative.dev": "true"
     "function.knative.dev/name": "func-pac"
-    "function.knative.dev/runtime": "rust"
+    "function.knative.dev/runtime": "springboot"
     
   annotations:
     

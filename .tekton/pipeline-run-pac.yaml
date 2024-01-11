@@ -4,11 +4,12 @@ kind: PipelineRun
 metadata:
   labels:
     "app.kubernetes.io/instance": "func-pac"
+    "app.openshift.io/runtime": "spring-boot"
     "boson.dev/function": "true"
-    "boson.dev/runtime": "rust"
+    "boson.dev/runtime": "springboot"
     "function.knative.dev": "true"
     "function.knative.dev/name": "func-pac"
-    "function.knative.dev/runtime": "rust"
+    "function.knative.dev/runtime": "springboot"
     
     tekton.dev/pipeline: func-pac-pack-git-pipeline
   annotations:
@@ -53,7 +54,9 @@ spec:
       value: ghcr.io/knative/builder-jammy-base:latest
     - name: buildEnvs
       value:
-        - =
+        - BP_NATIVE_IMAGE=false
+        - BP_JVM_VERSION=17
+        - BP_MAVEN_BUILD_ARGUMENTS=-Pnative -Dmaven.test.skip=true --no-transfer-progress package
         
   pipelineRef:
    name: func-pac-pack-git-pipeline
