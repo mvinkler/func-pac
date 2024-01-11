@@ -47,9 +47,9 @@ spec:
     - name: contextDir
       value: .
     - name: imageName
-      value: image-registry.openshift-image-registry.svc:5000/default/func:latest
+      value: image-registry.openshift-image-registry.svc:5000/demo/func:latest
     - name: registry
-      value: image-registry.openshift-image-registry.svc:5000/default
+      value: image-registry.openshift-image-registry.svc:5000/demo
     - name: builderImage
       value: registry.access.redhat.com/ubi8/nodejs-16
     - name: buildEnvs
