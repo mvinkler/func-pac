@@ -1,5 +1,5 @@
 # Rust HTTP Function
-
+ble
 Welcome to your new Rust function project! The boilerplate
 [actix](https://actix.rs/) web server is in
 [`src/main.rs`](./src/main.rs). It's configured to invoke the `index`
