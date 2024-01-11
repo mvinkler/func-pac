@@ -1,20 +1,62 @@
-# Go HTTP Function
+# Rust HTTP Function
 
-Welcome to your new Go Function! The boilerplate function code can be found in
-[`handle.go`](handle.go). This Function responds to HTTP requests.
+Welcome to your new Rust function project! The boilerplate
+[actix](https://actix.rs/) web server is in
+[`src/main.rs`](./src/main.rs). It's configured to invoke the `index`
+function in [`src/handler.rs`](./src/handler.rs) in response to both
+GET and POST requests. You should put your desired behavior inside
+that `index` function. In case you need to configure
+some resources for your function, you can do that in the [`configure` function](./src/config.rs).
+
+The app will expose three endpoints:
+
+  * `/` Triggers the `index` function, for either GET or POST methods
+  * `/health/readiness` The endpoint for a readiness health check
+  * `/health/liveness` The endpoint for a liveness health check
+
+You may use any of the available [actix
+features](https://actix.rs/docs/) to fulfill the requests at those
+endpoints.
 
 ## Development
 
-Develop new features by adding a test to [`handle_test.go`](handle_test.go) for
-each feature, and confirm it works with `go test`.
+This is a fully self-contained application, so you can develop it as
+you would any other Rust application, e.g.
 
-Update the running analog of the function using the `func` CLI or client
-library, and it can be invoked from your browser or from the command line:
-
-```console
-curl http://myfunction.example.com/
+```shell script
+cargo build
+cargo test
+cargo run
 ```
 
-For more, see [the complete documentation]('https://github.com/knative/func/tree/main/docs')
+Once running, the function is available at <http://localhost:8080> and
+the health checks are at <http://localhost:8080/health/readiness> and
+<http://localhost:8080/health/liveness>. To POST data to the function,
+a utility such as `curl` may be used:
 
+```console
+curl -d '{"hello": "world"}' \
+  -H'content-type: application/json' \
+  http://localhost:8080
+```
 
+## Deployment
+
+Use `func` to containerize your application, publish it to a registry
+and deploy it as a Knative Service in your Kubernetes cluster:
+
+```shell script
+func deploy --registry=docker.io/<YOUR_ACCOUNT>
+```
+
+You can omit the `--registry` option by setting the `FUNC_REGISTRY`
+environment variable. And if you forget, you'll be prompted.
+
+The output from a successful deploy should show the URL for the
+service, which you can also get via `func info`, e.g.
+
+```console
+curl $(func info -o url)
+```
+
+Have fun!

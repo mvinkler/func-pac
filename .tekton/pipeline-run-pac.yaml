@@ -4,12 +4,11 @@ kind: PipelineRun
 metadata:
   labels:
     "app.kubernetes.io/instance": "func-pac"
-    "app.openshift.io/runtime": "golang"
     "boson.dev/function": "true"
-    "boson.dev/runtime": "go"
+    "boson.dev/runtime": "rust"
     "function.knative.dev": "true"
     "function.knative.dev/name": "func-pac"
-    "function.knative.dev/runtime": "go"
+    "function.knative.dev/runtime": "rust"
     
     tekton.dev/pipeline: func-pac-pack-git-pipeline
   annotations:
@@ -51,7 +50,7 @@ spec:
     - name: registry
       value: image-registry.openshift-image-registry.svc:5000/demo
     - name: builderImage
-      value: ghcr.io/knative/builder-jammy-tiny:latest
+      value: ghcr.io/knative/builder-jammy-base:latest
     - name: buildEnvs
       value:
         - =

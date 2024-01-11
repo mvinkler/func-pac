@@ -4,12 +4,11 @@ kind: Pipeline
 metadata:
   labels:
     "app.kubernetes.io/instance": "func-pac"
-    "app.openshift.io/runtime": "golang"
     "boson.dev/function": "true"
-    "boson.dev/runtime": "go"
+    "boson.dev/runtime": "rust"
     "function.knative.dev": "true"
     "function.knative.dev/name": "func-pac"
-    "function.knative.dev/runtime": "go"
+    "function.knative.dev/runtime": "rust"
     
   annotations:
     
