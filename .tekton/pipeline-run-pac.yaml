@@ -3,15 +3,15 @@ apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   labels:
-    "app.kubernetes.io/instance": "func"
-    "app.openshift.io/runtime": "nodejs"
+    "app.kubernetes.io/instance": "func-pac"
+    "app.openshift.io/runtime": "python"
     "boson.dev/function": "true"
-    "boson.dev/runtime": "node"
+    "boson.dev/runtime": "python"
     "function.knative.dev": "true"
-    "function.knative.dev/name": "func"
-    "function.knative.dev/runtime": "node"
+    "function.knative.dev/name": "func-pac"
+    "function.knative.dev/runtime": "python"
     
-    tekton.dev/pipeline: func-s2i-git-pipeline
+    tekton.dev/pipeline: func-pac-s2i-git-pipeline
   annotations:
     # The event we are targeting as seen from the webhook payload
     # this can be an array too, i.e: [pull_request, push]
@@ -37,7 +37,7 @@ metadata:
 
     # User defined Annotations
     
-  generateName: func-s2i-git-pipeline-run
+  generateName: func-pac-s2i-git-pipeline-run
 spec:
   params:
     - name: gitRepository
@@ -47,11 +47,11 @@ spec:
     - name: contextDir
       value: .
     - name: imageName
-      value: image-registry.openshift-image-registry.svc:5000/demo/func:latest
+      value: image-registry.openshift-image-registry.svc:5000/demo/func-pac:latest
     - name: registry
       value: image-registry.openshift-image-registry.svc:5000/demo
     - name: builderImage
-      value: registry.access.redhat.com/ubi8/nodejs-16
+      value: registry.access.redhat.com/ubi8/python-39
     - name: buildEnvs
       value:
         - =
@@ -59,16 +59,16 @@ spec:
     - name: s2iImageScriptsUrl
       value: image:///usr/libexec/s2i
   pipelineRef:
-   name: func-s2i-git-pipeline
+   name: func-pac-s2i-git-pipeline
   workspaces:
     - name: source-workspace
       persistentVolumeClaim:
-        claimName: func-s2i-git-pipeline-pvc
+        claimName: func-pac-s2i-git-pipeline-pvc
       subPath: source
     - name: cache-workspace
       persistentVolumeClaim:
-        claimName: func-s2i-git-pipeline-pvc
+        claimName: func-pac-s2i-git-pipeline-pvc
       subPath: cache
     - name: dockerconfig-workspace
       secret:
-        secretName: func-s2i-git-pipeline-secret
+        secretName: func-pac-s2i-git-pipeline-secret

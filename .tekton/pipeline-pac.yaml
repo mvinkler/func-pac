@@ -3,17 +3,17 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   labels:
-    "app.kubernetes.io/instance": "func"
-    "app.openshift.io/runtime": "nodejs"
+    "app.kubernetes.io/instance": "func-pac"
+    "app.openshift.io/runtime": "python"
     "boson.dev/function": "true"
-    "boson.dev/runtime": "node"
+    "boson.dev/runtime": "python"
     "function.knative.dev": "true"
-    "function.knative.dev/name": "func"
-    "function.knative.dev/runtime": "node"
+    "function.knative.dev/name": "func-pac"
+    "function.knative.dev/runtime": "python"
     
   annotations:
     
-  name: func-s2i-git-pipeline
+  name: func-pac-s2i-git-pipeline
 spec:
   params:
     - default: ''
