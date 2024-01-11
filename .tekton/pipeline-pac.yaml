@@ -4,12 +4,11 @@ kind: Pipeline
 metadata:
   labels:
     "app.kubernetes.io/instance": "func-pac"
-    "app.openshift.io/runtime": "python"
     "boson.dev/function": "true"
-    "boson.dev/runtime": "python"
+    "boson.dev/runtime": "typescript"
     "function.knative.dev": "true"
     "function.knative.dev/name": "func-pac"
-    "function.knative.dev/runtime": "python"
+    "function.knative.dev/runtime": "typescript"
     
   annotations:
     

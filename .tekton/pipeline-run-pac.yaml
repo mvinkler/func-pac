@@ -4,12 +4,11 @@ kind: PipelineRun
 metadata:
   labels:
     "app.kubernetes.io/instance": "func-pac"
-    "app.openshift.io/runtime": "python"
     "boson.dev/function": "true"
-    "boson.dev/runtime": "python"
+    "boson.dev/runtime": "typescript"
     "function.knative.dev": "true"
     "function.knative.dev/name": "func-pac"
-    "function.knative.dev/runtime": "python"
+    "function.knative.dev/runtime": "typescript"
     
     tekton.dev/pipeline: func-pac-s2i-git-pipeline
   annotations:
@@ -51,10 +50,10 @@ spec:
     - name: registry
       value: image-registry.openshift-image-registry.svc:5000/demo
     - name: builderImage
-      value: registry.access.redhat.com/ubi8/python-39
+      value: registry.access.redhat.com/ubi8/nodejs-16
     - name: buildEnvs
       value:
-        - =
+        - BP_NODE_RUN_SCRIPTS=build
         
     - name: s2iImageScriptsUrl
       value: image:///usr/libexec/s2i
