@@ -1,4 +1,11 @@
 specVersion: 0.35.0
 name: func
 runtime: node
+registry: image-registry.openshift-image-registry.svc:5000/default
+image: image-registry.openshift-image-registry.svc:5000/default/func:latest
 created: 2024-01-11T10:40:13.482125249+01:00
+build:
+  git:
+    url: https://github.com/mvinkler/func-pac
+    revision: main
+  builder: s2i
