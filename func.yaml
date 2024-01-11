@@ -1,8 +1,8 @@
 specVersion: 0.35.0
-name: func-pac-two
+name: func-pac-three
 runtime: springboot
 registry: image-registry.openshift-image-registry.svc:5000/demo
-image: image-registry.openshift-image-registry.svc:5000/demo/func-pac-two:latest
+image: image-registry.openshift-image-registry.svc:5000/demo/func-pac-three:latest
 created: 2024-01-11T14:30:13.178541007+01:00
 build:
   git:

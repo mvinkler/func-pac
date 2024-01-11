@@ -3,17 +3,17 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   labels:
-    "app.kubernetes.io/instance": "func-pac-two"
+    "app.kubernetes.io/instance": "func-pac-three"
     "app.openshift.io/runtime": "spring-boot"
     "boson.dev/function": "true"
     "boson.dev/runtime": "springboot"
     "function.knative.dev": "true"
-    "function.knative.dev/name": "func-pac-two"
+    "function.knative.dev/name": "func-pac-three"
     "function.knative.dev/runtime": "springboot"
     
   annotations:
     
-  name: func-pac-two-pack-git-pipeline
+  name: func-pac-three-pack-git-pipeline
 spec:
   params:
     - default: ''
